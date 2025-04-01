@@ -1,5 +1,6 @@
-const functions = require("firebase-functions");
+const functions = require("firebase-functions/v1");
 const admin = require("firebase-admin");
+
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
   databaseURL: "https://rush-ktp-default-rtdb.firebaseio.com/",
@@ -272,18 +273,20 @@ exports.getGITimes = functions.https.onCall(async (data, context) => {
   return times;
 });
 
+
 let rush_users = admin.database().ref("rush_users");
-exports.beforeAcc = functions.auth.user().beforeCreate(async (user) => {
-  if (user.email.includes("northwestern.edu")) {
-    console.log("User allowed\n");
-    await rush_users
-      .child(user.uid)
-      .set({ email: user.email, completed_application: false });
-    return true;
-  }
-  console.log("User not allowed\n");
-  throw new functions.auth.HttpsError("permission-denied");
-});
+  exports.beforeAcc = functions.auth.user().beforeCreate(async (user) => {
+    if (user.email.includes("northwestern.edu")) {
+      console.log("User allowed\n");
+      await rush_users
+        .child(user.uid)
+        .set({ email: user.email, completed_application: false });
+      return true;
+    }
+    console.log("User not allowed\n");
+    throw new functions.auth.HttpsError("permission-denied");
+  });
+
 
 exports.publishResults = functions.https.onCall(async (data, context) => {
   const prom = new Promise((resolve, reject) => {
