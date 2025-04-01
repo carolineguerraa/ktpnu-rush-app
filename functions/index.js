@@ -258,7 +258,7 @@ exports.getGITimes = functions.https.onCall(async (data, context) => {
     //j is the col
     if (
       !isNaN(sheet.getCell(i, 1).value) &&
-      parseFloat(sheet.getCell(i, 1).value) < 25
+      parseFloat(sheet.getCell(i, 1).value) < 30
     ) {
       times.push({
         time: sheet.getCell(i, 0).value,
