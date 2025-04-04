@@ -433,7 +433,7 @@ export default function Application(props: {
                                     Swal.fire({
                                       icon: "error",
                                       title:
-                                        "Cover picture uploads must be in jpeg or png format",
+                                        "Cover picture uploads must be in jpeg or png format and less than 10 mb in size.",
                                     });
                                   } else {
                                     var reader = new FileReader();
