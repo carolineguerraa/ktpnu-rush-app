@@ -37,7 +37,7 @@ exports.reserveCCTime = functions.https.onCall(async (data, context) => {
   await cc_signup_doc.useServiceAccountAuth(creds);
   await cc_signup_doc.loadInfo();
   const sheet = cc_signup_doc.sheetsByIndex[0];
-  await sheet.loadCells("A6:H25");
+  await sheet.loadCells("A6:I25");
   const reserve_row = data.i;
   var reserve_col = 5;
   while (reserve_col < 8) {
@@ -73,7 +73,7 @@ exports.reserveGITime = functions.https.onCall(async (data, context) => {
   await doc.useServiceAccountAuth(creds);
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
-  await sheet.loadCells("A2:Y3");
+  await sheet.loadCells("A2:Z3");
   var numTimeSignups = sheet.getCell(data.i, 1).value;
   var reserveCol = numTimeSignups + 2;
   console.log(
@@ -123,6 +123,7 @@ exports.reserveGITime = functions.https.onCall(async (data, context) => {
 
 exports.getCCTimes = functions.https.onCall(async (data, context) => {
   times = [];
+  console.log("running\n");
   await cc_signup_doc.useServiceAccountAuth(creds);
   await cc_signup_doc.loadInfo();
   const sheet = cc_signup_doc.sheetsByIndex[0];
@@ -136,10 +137,12 @@ exports.getCCTimes = functions.https.onCall(async (data, context) => {
       var has_spot = false;
       for (var j = 5; j < 8; j++) {
         if (!sheet.getCell(i, j).value) {
+          console.log("hasspot\n");
           has_spot = true;
         }
       }
       if (!has_spot) {
+        console.log("nospot\n");
         continue;
       }
       times.push({
@@ -158,7 +161,7 @@ exports.reserveIndivTime = functions.https.onCall(async (data, context) => {
   await indiv_signup_doc.useServiceAccountAuth(creds);
   await indiv_signup_doc.loadInfo();
   const sheet = indiv_signup_doc.sheetsByIndex[0];
-  await sheet.loadCells("A3:Q13");
+  await sheet.loadCells("A3:R13");
   const toReserve = sheet.getCell(data.i, data.j);
   if (toReserve.value) {
     console.log("Time already reserved!");
