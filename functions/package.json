@@ -18,7 +18,7 @@
     "firebase-functions": "^4.9.0",
     "fs-extra": "^11.1.0",
     "google-libphonenumber": "^3.2.31",
-    "google-spreadsheet": "^4.1.4",
+    "google-spreadsheet": "^3.3.0",
     "request": "^2.88.2",
     "sharp": "^0.31.3",
     "twilio": "^3.84.1"
